@@ -2,6 +2,8 @@ package mbita;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
@@ -11,6 +13,7 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
     private static final long HTTP_CLIENT_CONNECT_TIMEOUT_SECONDS = 20;
     public static final int HTTP_CLIENT_REQUEST_TIMEOUT_MINUTES = 2;
     public static final String HTTP_CLIENT_URI = "https://www.cmteb.ro/functionare_sistem_termoficare.php";
@@ -32,14 +35,13 @@ public class Main {
         final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         final long timestampAfterRequest = System.currentTimeMillis();
 
-        System.out.println(String.format("Request took %s millis", timestampAfterRequest - timestampBeforeRequest));
-        System.out.println(response.statusCode());
-        System.out.println(response.body());
+        logger.info("Response received with status code <{}> and body <{}>", response.statusCode(), response.body());
+        logger.info("Request took {} millis", timestampAfterRequest - timestampBeforeRequest);
 
         final long timestampBeforeParse = System.currentTimeMillis();
         final Document document = Jsoup.parse(response.body());
         final long timestampAfterParse = System.currentTimeMillis();
 
-        System.out.println(String.format("Parse took %s millis", timestampAfterParse - timestampBeforeParse));
+        logger.info("Parsing the response body took {} millis", timestampAfterParse - timestampBeforeParse);
     }
 }
