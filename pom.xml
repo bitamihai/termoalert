@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jsoup.version>1.17.1</jsoup.version>
         <log4j.version>2.22.0</log4j.version>
+        <weld.version>5.1.2.Final</weld.version>
     </properties>
 
     <dependencies>
@@ -36,6 +37,11 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld.se</groupId>
+            <artifactId>weld-se-core</artifactId>
+            <version>${weld.version}</version>
         </dependency>
     </dependencies>
 </project>
