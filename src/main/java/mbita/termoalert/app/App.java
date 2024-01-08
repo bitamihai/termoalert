@@ -15,12 +15,15 @@ import java.io.IOException;
 public class App {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
 
-    @Inject
-    @Named("impactStatusParser")
-    private Parser<String, ImpactStatus> impactStatusParser;
+    private final Parser<String, ImpactStatus> impactStatusParser;
+    private final StatusGetter statusGetter;
 
-    @Inject()
-    private StatusGetter statusGetter;
+    @Inject
+    public App(final StatusGetter statusGetter,
+               @Named("impactStatusParser") final Parser<String, ImpactStatus> impactStatusParser) {
+        this.statusGetter = statusGetter;
+        this.impactStatusParser = impactStatusParser;
+    }
 
     public void run() throws IOException, InterruptedException {
         final String statusHtml = statusGetter.get();

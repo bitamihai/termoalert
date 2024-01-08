@@ -21,6 +21,6 @@
             <AppenderRef ref="logFile"/>
         </Root>
 
-        <Logger name="mbita" level="debug"/>
+        <Logger name="mbita.termoalert" level="debug"/>
     </Loggers>
 </Configuration>
