@@ -6,6 +6,8 @@ import jakarta.inject.Named;
 import mbita.termoalert.http.StatusGetter;
 import mbita.termoalert.model.ImpactStatus;
 import mbita.termoalert.parser.Parser;
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,5 +30,12 @@ public class App {
     public void run() throws IOException, InterruptedException {
         final String statusHtml = statusGetter.get();
         impactStatusParser.parse(statusHtml);
+    }
+
+    public static void main(final String[] args) throws IOException, InterruptedException {
+        Weld weld = new Weld();
+        WeldContainer container = weld.initialize();
+        container.select(App.class).get().run();
+        container.shutdown();
     }
 }
