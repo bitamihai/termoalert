@@ -17,7 +17,8 @@ import java.util.regex.Pattern;
 
 @ApplicationScoped
 class ThermalNodeImpactParser implements Parser<Element, Set<ThermalNodeImpact>> {
-    private static final Logger logger = LoggerFactory.getLogger(ThermalNodeImpactParser.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ThermalNodeImpactParser.class);
 
     private final Parser<String, Set<StreetImpact>> streetImpactParser;
 
@@ -28,11 +29,11 @@ class ThermalNodeImpactParser implements Parser<Element, Set<ThermalNodeImpact>>
     }
 
     public Set<ThermalNodeImpact> parse(final Element element) {
-        logger.debug("Parsing thermal node impact");
-        logger.trace("Parsing thermal node impact from element <{}>", element);
+        LOGGER.debug("Parsing thermal node impact");
+        LOGGER.trace("Parsing thermal node impact from element <{}>", element);
 
         final String[] thermalNodesData = element.text().split("Punct termic: ");
-        logger.trace("Splitted element string to <{}>", Arrays.toString(thermalNodesData));
+        LOGGER.trace("Splitted element string to <{}>", Arrays.toString(thermalNodesData));
 
         final Pattern pattern = Pattern.compile("(.*) -- (.*)");
         final List<ThermalNodeImpact> thermalNodeImpacts = Arrays.stream(thermalNodesData)
@@ -40,8 +41,9 @@ class ThermalNodeImpactParser implements Parser<Element, Set<ThermalNodeImpact>>
                 .filter(Matcher::find)
                 .map(matcher -> new ThermalNodeImpact(matcher.group(1), streetImpactParser.parse(matcher.group(2))))
                 .toList();
-        logger.trace("Built thermal node impact list <{}>", thermalNodeImpacts);
+        LOGGER.trace("Built thermal node impact list <{}>", thermalNodeImpacts);
 
         return Set.copyOf(thermalNodeImpacts);
     }
+
 }

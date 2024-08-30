@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 public class ThermalNodeImpact {
+
     private final String thermalNode;
     private final Set<StreetImpact> streetImpacts;
 
@@ -27,4 +28,5 @@ public class ThermalNodeImpact {
                 ", streetImpacts=" + streetImpacts +
                 '}';
     }
+
 }

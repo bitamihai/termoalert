@@ -15,7 +15,8 @@ import java.util.Set;
 
 @ApplicationScoped
 class ImpactStatusParser implements Parser<String, ImpactStatus> {
-    private static final Logger logger = LoggerFactory.getLogger(ImpactStatusParser.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ImpactStatusParser.class);
 
     private final Parser<Element, Set<SectorImpact>> sectorImpactParser;
 
@@ -26,17 +27,18 @@ class ImpactStatusParser implements Parser<String, ImpactStatus> {
     }
 
     public ImpactStatus parse(final String response) {
-        logger.debug("Parsing impact status");
+        LOGGER.debug("Parsing impact status");
 
         final Document document = Jsoup.parse(response);
-        logger.trace("Parsed HTML response: <{}>", document);
+        LOGGER.trace("Parsed HTML response: <{}>", document);
 
         final Element fullTableDivElement = document.getElementById("ST");
-        logger.trace("Found full table div: <{}>", fullTableDivElement);
+        LOGGER.trace("Found full table div: <{}>", fullTableDivElement);
 
         final ImpactStatus impactStatus = new ImpactStatus(sectorImpactParser.parse(fullTableDivElement));
-        logger.trace("Built impact status <{}>", impactStatus);
+        LOGGER.trace("Built impact status <{}>", impactStatus);
 
         return impactStatus;
     }
+
 }

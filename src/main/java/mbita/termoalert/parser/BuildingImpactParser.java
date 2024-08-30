@@ -11,26 +11,28 @@ import java.util.Set;
 
 @ApplicationScoped
 class BuildingImpactParser implements Parser<String, Set<BuildingImpact>> {
-    private static final Logger logger = LoggerFactory.getLogger(BuildingImpactParser.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BuildingImpactParser.class);
 
     public Set<BuildingImpact> parse(final String string) {
-        logger.debug("Parsing building impact");
-        logger.trace("Parsing building impact from string <{}>", string);
+        LOGGER.debug("Parsing building impact");
+        LOGGER.trace("Parsing building impact from string <{}>", string);
 
         final String trimmedString = string.trim()
                 .replaceAll("\\s*bl\\.\\s*", "")
                 .replaceAll("\\s*[,|;]\\s*", ",");
-        logger.trace("Trimmed string to <{}>", trimmedString);
+        LOGGER.trace("Trimmed string to <{}>", trimmedString);
 
         final String[] buildingData = trimmedString.split(",");
-        logger.trace("Splitted string to <{}>", Arrays.toString(buildingData));
+        LOGGER.trace("Splitted string to <{}>", Arrays.toString(buildingData));
 
         final List<BuildingImpact> buildingImpactList = Arrays.stream(buildingData)
                 .filter(s -> !s.isEmpty())
                 .map(BuildingImpact::new)
                 .toList();
-        logger.trace("Built building impact list <{}>", buildingImpactList);
+        LOGGER.trace("Built building impact list <{}>", buildingImpactList);
 
         return Set.copyOf(buildingImpactList);
     }
+
 }

@@ -16,7 +16,8 @@ import java.util.regex.Pattern;
 
 @ApplicationScoped
 class StreetImpactParser implements Parser<String, Set<StreetImpact>> {
-    private static final Logger logger = LoggerFactory.getLogger(StreetImpactParser.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(StreetImpactParser.class);
 
     private final Parser<String, Set<BuildingImpact>> buildingImpactParser;
 
@@ -27,11 +28,11 @@ class StreetImpactParser implements Parser<String, Set<StreetImpact>> {
     }
 
     public Set<StreetImpact> parse(final String string) {
-        logger.debug("Parsing street impact");
-        logger.trace("Parsing street impact from string <{}>", string);
+        LOGGER.debug("Parsing street impact");
+        LOGGER.trace("Parsing street impact from string <{}>", string);
 
         final String[] streetData = string.split("• ");
-        logger.trace("Splitted string to <{}>", Arrays.toString(streetData));
+        LOGGER.trace("Splitted string to <{}>", Arrays.toString(streetData));
 
         final Pattern pattern = Pattern.compile("(.*) - (.*)");
         final List<StreetImpact> streetImpacts = Arrays.stream(streetData)
@@ -39,8 +40,9 @@ class StreetImpactParser implements Parser<String, Set<StreetImpact>> {
                 .filter(Matcher::find)
                 .map(matcher -> new StreetImpact(matcher.group(1), buildingImpactParser.parse(matcher.group(2))))
                 .toList();
-        logger.trace("Build street impact list <{}>", streetImpacts);
+        LOGGER.trace("Build street impact list <{}>", streetImpacts);
 
         return Set.copyOf(streetImpacts);
     }
+
 }

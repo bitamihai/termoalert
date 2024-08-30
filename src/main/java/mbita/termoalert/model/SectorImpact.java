@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 public class SectorImpact {
+
     private final int sector;
     private final Set<ThermalNodeImpact> thermalNodeImpacts;
     private final String impact;
@@ -52,4 +53,5 @@ public class SectorImpact {
                 ", eta='" + eta + '\'' +
                 '}';
     }
+
 }

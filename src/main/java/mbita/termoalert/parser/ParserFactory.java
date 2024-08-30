@@ -11,6 +11,7 @@ import java.util.Set;
 
 @ApplicationScoped
 public class ParserFactory {
+
     private final BuildingImpactParser buildingImpactParser;
     private final ImpactStatusParser impactStatusParser;
     private final SectorImpactParser sectorImpactParser;
@@ -59,4 +60,5 @@ public class ParserFactory {
     public Parser<Element, Set<ThermalNodeImpact>> getThermalNodeImpactParser() {
         return thermalNodeImpactParser;
     }
+
 }

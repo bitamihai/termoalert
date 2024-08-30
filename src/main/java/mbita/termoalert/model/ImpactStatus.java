@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 public class ImpactStatus {
+
     private final Set<SectorImpact> sectorImpacts;
     private final long timestamp;
 
@@ -27,4 +28,5 @@ public class ImpactStatus {
                 ", timestamp=" + timestamp +
                 '}';
     }
+
 }

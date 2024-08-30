@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 public class StreetImpact {
+
     private final String street;
     private final Set<BuildingImpact> buildingImpacts;
 
@@ -27,4 +28,5 @@ public class StreetImpact {
                 ", buildingImpacts=" + buildingImpacts +
                 '}';
     }
+
 }

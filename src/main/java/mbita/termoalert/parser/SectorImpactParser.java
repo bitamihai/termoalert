@@ -15,7 +15,8 @@ import java.util.Set;
 
 @ApplicationScoped
 class SectorImpactParser implements Parser<Element, Set<SectorImpact>> {
-    private static final Logger logger = LoggerFactory.getLogger(SectorImpactParser.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SectorImpactParser.class);
 
     private final Parser<Element, Set<ThermalNodeImpact>> thermalNodeImpactParser;
 
@@ -26,15 +27,15 @@ class SectorImpactParser implements Parser<Element, Set<SectorImpact>> {
     }
 
     public Set<SectorImpact> parse(final Element element) {
-        logger.debug("Parsing sector impact");
-        logger.trace("Parsing sector impact from element <{}>", element);
+        LOGGER.debug("Parsing sector impact");
+        LOGGER.trace("Parsing sector impact from element <{}>", element);
 
         final Elements sectorElements = element.getElementsByTag("tr");
-        logger.trace("Found {} elements:", sectorElements.stream().count());
-        sectorElements.forEach(e -> logger.trace("Found sector element: <{}>", e));
+        LOGGER.trace("Found {} elements:", sectorElements.stream().count());
+        sectorElements.forEach(e -> LOGGER.trace("Found sector element: <{}>", e));
 
         final Element headerElement = sectorElements.remove(0);
-        logger.trace("Removed header element: <{}>", headerElement);
+        LOGGER.trace("Removed header element: <{}>", headerElement);
 
         final List<SectorImpact> sectorImpacts = sectorElements.stream()
                 .map(this::parseIndividualSectorData)
@@ -44,11 +45,11 @@ class SectorImpactParser implements Parser<Element, Set<SectorImpact>> {
     }
 
     private SectorImpact parseIndividualSectorData(final Element element) {
-        logger.debug("Parsing individual sector impact");
-        logger.trace("Parsing individual sector impact from element <{}>", element);
+        LOGGER.debug("Parsing individual sector impact");
+        LOGGER.trace("Parsing individual sector impact from element <{}>", element);
 
         final Elements sectorImpactData = element.getElementsByTag("td");
-        logger.trace("Splitted table elements to <{}>", sectorImpactData);
+        LOGGER.trace("Splitted table elements to <{}>", sectorImpactData);
 
         final int sector = Integer.parseInt(sectorImpactData.get(0).text());
         final Set<ThermalNodeImpact> thermalNodeImpacts = thermalNodeImpactParser.parse(sectorImpactData.get(1));
@@ -56,8 +57,9 @@ class SectorImpactParser implements Parser<Element, Set<SectorImpact>> {
         final String description = sectorImpactData.get(3).text();
         final String eta = sectorImpactData.get(4).text();
         final SectorImpact sectorImpact = new SectorImpact(sector, thermalNodeImpacts, impact, description, eta);
-        logger.trace("Built sector impact <{}>", sectorImpact);
+        LOGGER.trace("Built sector impact <{}>", sectorImpact);
 
         return sectorImpact;
     }
+
 }

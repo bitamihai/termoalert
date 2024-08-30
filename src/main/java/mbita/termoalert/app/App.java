@@ -12,10 +12,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 @ApplicationScoped
 public class App {
-    private static final Logger logger = LoggerFactory.getLogger(App.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
     private final Parser<String, ImpactStatus> impactStatusParser;
     private final StatusGetter statusGetter;
@@ -29,7 +35,7 @@ public class App {
 
     public void run() throws IOException, InterruptedException {
         final String statusHtml = statusGetter.get();
-        impactStatusParser.parse(statusHtml);
+        final ImpactStatus impactStatus = impactStatusParser.parse(statusHtml);
     }
 
     public static void main(final String[] args) throws IOException, InterruptedException {
@@ -38,4 +44,5 @@ public class App {
         container.select(App.class).get().run();
         container.shutdown();
     }
+
 }
