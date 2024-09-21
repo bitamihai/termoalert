@@ -1,5 +1,7 @@
 package mbita.termoalert.app;
 
+import dev.morphia.Datastore;
+import dev.morphia.Morphia;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -12,11 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 @ApplicationScoped
 public class App {
@@ -34,6 +31,7 @@ public class App {
     }
 
     public void run() throws IOException, InterruptedException {
+        Datastore datastore = Morphia.createDatastore("mongodb://localhost:27017");
         final String statusHtml = statusGetter.get();
         final ImpactStatus impactStatus = impactStatusParser.parse(statusHtml);
     }
